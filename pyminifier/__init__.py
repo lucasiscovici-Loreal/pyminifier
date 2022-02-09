@@ -260,7 +260,7 @@ def pyminify(options, files):
             prefix_to_remove=options.prefix_to_remove
             if options.use_file_path:
                filepath = Path(sourcefile).relative_to(prefix_to_remove) if prefix_to_remove is not None else Path(sourcefile)
-               filepath = filepath.resolve().as_posix()[1:]
+               filepath = filepath.as_posix()[1:] if filepath.is_absolute() else filepath.as_posix()
             else:
                filepath = Path(sourcefile).name
             path = Path(options.destdir) / filepath # Put everything in destdir
