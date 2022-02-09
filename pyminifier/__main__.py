@@ -70,6 +70,13 @@ def main():
         help="Save file inside destdir with their path directories strutures",
     )
     parser.add_option(
+        "--inplace",
+        action="store_true",
+        dest="inplace",
+        default=False,
+        help="Save file inplace",
+    )
+    parser.add_option(
         "--bzip2",
         action="store_true",
         dest="bzip2",
