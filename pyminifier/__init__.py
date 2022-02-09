@@ -69,6 +69,7 @@ something is broken.
 import os, sys, re, io
 from optparse import OptionParser
 from collections import Iterable
+from pathlib import Path
 
 # Import our own modules
 from . import minification
@@ -256,8 +257,9 @@ def pyminify(options, files):
             if not os.path.exists(options.destdir):
                 os.mkdir(options.destdir)
             # Need the path where the script lives for the next steps:
-            filepath = os.path.split(sourcefile)[1]
-            path = options.destdir + '/' + filepath # Put everything in destdir
+            prefix_to_remove=options.prefix_to_remove
+            filepath = Path(sourcefile).relative_to(prefix_to_remove) if prefix_to_remove is not None else Path(sourcefile)
+            path = Path(options.destdir) / filepath.as_posix()[1:] # Put everything in destdir
             f = open(path, 'w')
             f.write(result)
             f.close()
