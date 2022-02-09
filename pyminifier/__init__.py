@@ -258,8 +258,12 @@ def pyminify(options, files):
                 os.mkdir(options.destdir)
             # Need the path where the script lives for the next steps:
             prefix_to_remove=options.prefix_to_remove
-            filepath = Path(sourcefile).relative_to(prefix_to_remove) if prefix_to_remove is not None else Path(sourcefile)
-            path = Path(options.destdir) / filepath.as_posix()[1:] # Put everything in destdir
+            if options.use_file_path:
+               filepath = Path(sourcefile).relative_to(prefix_to_remove) if prefix_to_remove is not None else Path(sourcefile)
+               filepath = filepath.as_posix()[1:]
+            else:
+               filepath = Path(sourcefile).name
+            path = Path(options.destdir) / filepath # Put everything in destdir
             f = open(path, 'w')
             f.write(result)
             f.close()
