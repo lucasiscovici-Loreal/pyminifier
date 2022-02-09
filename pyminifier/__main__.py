@@ -48,11 +48,26 @@ def main():
         help="Don't bother minifying (only used with --pyz).",
     )
     parser.add_option(
+        "--prefix_to_remove",
+        dest="prefix_to_remove",
+        default=None,
+        action='store',
+        type=str,
+        help="Prefix to remove for the file",
+    )
+    parser.add_option(
         "--use-tabs",
         action="store_true",
         dest="tabs",
         default=False,
         help="Use tabs for indentation instead of spaces.",
+    )
+    parser.add_option(
+        "--use-file-path",
+        action="store_true",
+        dest="use_file_path",
+        default=False,
+        help="Save file inside destdir with their path directories strutures",
     )
     parser.add_option(
         "--bzip2",
