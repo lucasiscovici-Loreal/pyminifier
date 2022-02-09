@@ -250,17 +250,15 @@ def pyminify(options, files):
                 result = compression.gz_pack(result)
             elif lzma and options.lzma:
                 result = compression.lzma_pack(result)
-            result += (
-                "# Created by pyminifier "
-                "(https://github.com/liftoff/pyminifier)\n")
-            # Either save the result to the output file or print it to stdout
-            if not os.path.exists(options.destdir):
-                os.mkdir(options.destdir)
+                  
             # Need the path where the script lives for the next steps:
             if options.inplace:
                path = Path(sourcefile)
                path.write_text(result)
             else:
+               # Either save the result to the output file or print it to stdout
+               if not os.path.exists(options.destdir):
+                  os.mkdir(options.destdir)
                prefix_to_remove=options.prefix_to_remove
                if options.use_file_path:
                   filepath = Path(sourcefile).relative_to(prefix_to_remove) if prefix_to_remove is not None else Path(sourcefile)
