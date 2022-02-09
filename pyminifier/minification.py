@@ -86,7 +86,7 @@ def remove_docstrings(tokens):
                 # Remove the leftover indentation and newline:
                 tokens[index-1][1] = ''
                 tokens[index-2][1] = ''
-            elif prev_tok_type == tokenize.NL:
+            elif prev_tok_type == tokenize.NL or prev_tok_type == tokenize.ENCODING or prev_tok_type is None:
                 # This captures whole-module docstrings:
                 if tokens[index+1][0] == tokenize.NEWLINE:
                     tokens[index][1] = ''
