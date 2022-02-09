@@ -264,7 +264,7 @@ def pyminify(options, files):
             else:
                filepath = Path(sourcefile).name
             path = Path(options.destdir) / filepath # Put everything in destdir
-            path.mkdir(parents=True, exist_ok=True)
+            path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(result)
             new_filesize = os.path.getsize(path)
             cumulative_new += new_filesize
