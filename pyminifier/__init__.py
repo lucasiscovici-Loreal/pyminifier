@@ -257,15 +257,19 @@ def pyminify(options, files):
             if not os.path.exists(options.destdir):
                 os.mkdir(options.destdir)
             # Need the path where the script lives for the next steps:
-            prefix_to_remove=options.prefix_to_remove
-            if options.use_file_path:
-               filepath = Path(sourcefile).relative_to(prefix_to_remove) if prefix_to_remove is not None else Path(sourcefile)
-               filepath = filepath.as_posix()[1:] if filepath.is_absolute() else filepath.as_posix()
+            if options.inplace:
+               path = Path(sourcefile)
+               path.write_text(result)
             else:
-               filepath = Path(sourcefile).name
-            path = Path(options.destdir) / filepath # Put everything in destdir
-            path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(result)
+               prefix_to_remove=options.prefix_to_remove
+               if options.use_file_path:
+                  filepath = Path(sourcefile).relative_to(prefix_to_remove) if prefix_to_remove is not None else Path(sourcefile)
+                  filepath = filepath.as_posix()[1:] if filepath.is_absolute() else filepath.as_posix()
+               else:
+                  filepath = Path(sourcefile).name
+               path = Path(options.destdir) / filepath # Put everything in destdir
+               path.parent.mkdir(parents=True, exist_ok=True)
+               path.write_text(result)
             new_filesize = os.path.getsize(path)
             cumulative_new += new_filesize
             percent_saved = round((float(new_filesize) / float(filesize)) * 100, 2) if float(filesize)!=0 else 0
