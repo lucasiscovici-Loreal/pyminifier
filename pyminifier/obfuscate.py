@@ -47,7 +47,7 @@ def obfuscation_machine(use_unicode=False, identifier_length=1):
     uppercase = list(map(chr, range(65, 90)))
     if use_unicode:
         # Python 3 lets us have some *real* fun:
-        allowed_categories = ('LC', 'Ll', 'Lu', 'Lo', 'Lu')
+        allowed_categories = ('LC', 'Ll', 'Lu', 'Lo')
         # All the fun characters start at 1580 (hehe):
         big_list = list(map(chr, range(1580, HIGHEST_UNICODE)))
         max_chars = 1000 # Ought to be enough for anybody :)
@@ -57,7 +57,15 @@ def obfuscation_machine(use_unicode=False, identifier_length=1):
         # Find a good mix of left-to-right and right-to-left characters
         while len(combined) < max_chars:
             char = choice(big_list)
-            if unicodedata.category(char) in allowed_categories and "CJK UNIFIED IDEOGRAPH" not in unicodedata.name(char):
+            category = unicodedata.category(char)
+            if category.startswith('L') or category == 'Nl':
+                if not char.isidentifier():
+                    continue
+            else:
+                if not char.isidentifier():
+                    continue
+                    
+            if category in allowed_categories:
                 orientation = unicodedata.bidirectional(char)
                 if last_orientation in rtl_categories:
                     if orientation not in rtl_categories:
