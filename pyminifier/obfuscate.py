@@ -47,7 +47,7 @@ def obfuscation_machine(use_unicode=False, identifier_length=1):
     uppercase = list(map(chr, range(65, 90)))
     if use_unicode:
         # Python 3 lets us have some *real* fun:
-        allowed_categories = ('LC', 'Ll', 'Lu', 'Lo', 'Lu')
+        allowed_categories = ('LC', 'Ll', 'Lu', 'Lu')
         # All the fun characters start at 1580 (hehe):
         big_list = list(map(chr, range(1580, HIGHEST_UNICODE)))
         max_chars = 1000 # Ought to be enough for anybody :)
