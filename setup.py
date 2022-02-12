@@ -31,7 +31,7 @@ setup(
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
     provides=['pyminifier'],
-    python_requires='>=3',
+    python_requires='>=3.6.2',
     entry_points = {
         'console_scripts': [
             'pyminifier = pyminifier.__main__:main'
